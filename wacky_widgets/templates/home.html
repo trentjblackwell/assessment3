@@ -1,0 +1,50 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+ 
+
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+</head>
+
+<div class = container>
+  <div class = app>
+  <h1>Wacky Widgets</h1>
+  
+  {% if widgets.count == 0 %}
+  <h2>There aren't any widgets yet :(</h2>
+  {% else %} 
+  <table class ="pure-table pure-table-striped">
+    <thead>
+      <th>Widget</th>
+      <th>Quantity</th>
+      <th>Description</th>
+      <th>Delete</th>
+    </thead>
+    <tbody>
+      {% for widget in widgets %}
+      <tr>
+      <td>{{ widget.name }}</td>
+      <td>{{ widget.quantity }}</td>
+      <td>{{ widget.description }}</td>
+      <td><form action="{% url 'delete' widget.id %}" method="post">{% csrf_token %}<button class ="red">X</button></form></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+ 
+  {% endif %}
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Add a Widget</button>
+  </form>
+</div>
+</div>
+ 
